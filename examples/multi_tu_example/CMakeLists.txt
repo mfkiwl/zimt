@@ -90,13 +90,13 @@ endif()
 # automatically be up-to-date with the current cmake installation and
 # ISA additions/removals with new highway versions would be reflected
 # immediately. I have added EMU128 to the list - it's not used be code
-# compiled with foreach_target, but I add a dispatch option 'manually'
+# compiled with foreach_target, but I add an option to dispatch to it
 # in the example program. The list defined here decides which object
 # files are made - if object files are made which the program doesn't
 # use, no harm is done.
 
 if ( x86_64 )
-  list ( APPEND isa_l AVX3_SPR AVX3_ZEN4 AVX3 AVX2 SSE4 SSSE3 SSE2 EMU128 )
+  list ( APPEND isa_l AVX3_SPR AVX3_ZEN4 AVX3_DL AVX3 AVX2 SSE4 SSSE3 SSE2 EMU128 )
 # the NEON_BF16 ISA seems not to be built by default. We've used this
 # code to build envutil on a macBook pro with M1 processor:
 elseif ( arm64 )
@@ -110,8 +110,8 @@ else()
 endif()
 
 # for the test program composed of several ISA-specific TUs,
-# we have the main program disp_to_tu.cc, which does the
-# dispatching, and dispatch.cc, which has ISA-independent code
+# we have the main program driver.cc, which does the dispatching,
+# and dispatch.cc, which has ISA-independent code
 
 add_executable(multi_tu driver.cc dispatch.cc)
 
